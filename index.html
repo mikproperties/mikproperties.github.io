@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIK properties Real Estate</title>
+  <!-- Fancybox CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+  <style>
+    /* -------------------------
+       BASIC STYLES
+    --------------------------*/
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif;}
+    body {
+      background: linear-gradient(to right, #E6FFEE, #FFFFFF);
+      color: #222;
+      line-height: 1.6;
+    }
+    a{text-decoration:none;color:inherit;}
+    img{max-width:100%;border-radius:6px;}
+
+    /* -------------------------
+       HEADER & NAV
+    --------------------------*/
+    header{
+      background:linear-gradient(to bottom, #F0FFE6, #F7F7F7);
+      backdrop-filter:blur(4px);
+      padding:12px 20px;
+      position:sticky;top:0;z-index:1000;
+      box-shadow:0 2px 6px rgba(0,0,0,.15);
+    }
+    nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color:#00C853;
+    }
+    nav .brand img {
+  width: 50px;        /* আপনার লোগো সাইজ */
+  height: 50px;       /* সমান height রাখলে perfect circle হবে */
+  object-fit: cover;  /* image সুন্দর ফিট হবে */
+  border-radius: 50%; /* একে গোল করে */
+}
+
+    nav ul{
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+/* -------------------------
+      (ADD) — Stylish Home button for header/nav
+    --------------------------*/
+
+#homeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(90deg, #00C853 0%, #0077cc 100%); /* green->blue */
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 120, 204, 0.15), inset 0 -2px 6px rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+  backdrop-filter: blur(4px);
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* small icon inside button (optional) */
+#homeBtn .icon {
+  width: 18px;
+  height: 18px;
+  display:inline-block;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.06));
+}
+
+/* hover / focus / active */
+#homeBtn:hover,
+#homeBtn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,120,204,0.18);
+  outline: none;
+  opacity: 0.98;
+}
+
+#homeBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(0,120,204,0.12);
+  opacity: 0.95;
+}
+
+/* responsive tweak: smaller padding on mobile */
+@media (max-width: 480px) {
+  #homeBtn { padding: 6px 10px; font-size: 14px; border-radius: 10px; }
+}
+
+/* ABOUT button */
+#aboutBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: linear-gradient(90deg, #0077cc 0%, #00C853 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: .15s ease;
+}
+
+#aboutBtn:hover {
+  transform: translateY(-2px);
+  opacity: .95;
+}
+
+#aboutBtn:active {
+  transform: translateY(0);
+  opacity: .85;
+}
+
+/* Stylish SEARCH button */
+.searchBtn {
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #0077cc, #00C853);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .15s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.searchBtn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.searchBtn:active {
+  transform: translateY(0);
+  opacity: .85;
+}
+
+.social-icons {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 1000;
+}
+
+.social-icons a {
+  width: 55px;
+  height: 55px;
+  background: #fff;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transition: .25s;
+}
+
+.social-icons a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+  background: #fafafa;
+}
+
+.social-icons svg {
+  width: 28px;
+  height: 28px;
+}
+
+
+
+    /* -------------------------
+       SEARCH BAR (Sticky)
+    --------------------------*/
+    .search-bar {
+  display: none;  /* শুরুতে লুকানো থাকবে */
+  background:#ffffffdd;
+  backdrop-filter:blur(4px);
+  padding:10px;
+  justify-content:center;
+  gap:10px;
+  position:sticky;
+  top:60px;
+  z-index:900;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+.search-bar.active {
+  display: flex; /* toggle করলে আবার flex হবে */
+}
+    .search-bar input,.search-bar select,.search-bar button{
+      padding:8px 10px;
+      border:1px solid #ccc;
+      border-radius:4px;
+    }
+    .search-bar button{background:#0077cc;color:white;border:none;cursor:pointer;}
+
+    /* -------------------------
+       PROJECTS GRID
+    --------------------------*/
+    #projects{
+      padding:20px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
+      gap:20px;
+    }
+    .card{
+      background:#ffffffdd;
+      padding:20px;
+      border-color: green;
+      border-width: 2px;
+      border-radius:8px;
+      box-shadow:0 2px 6px rgba(0,0,0,.15);
+      cursor:pointer;
+      transition:transform .2s;
+    }
+    .card:hover{transform:scale(1.03);}
+    .card h3{margin:10px 0;color:#0077cc;}
+
+
+
+    /* -------------------------
+       ABOUT US PAGE
+    --------------------------*/
+    #about{display:none;padding:20px;background:#F3F8FF;
+    margin:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+
+    /* -------------------------
+       SOCIAL ICONS (Sticky Right)
+    --------------------------*/
+    .social-icons{
+      position:fixed;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+      z-index:1000;
+    }
+    .social-icons a{
+      width:40px;height:40px;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 2px 6px rgba(0,0,0,.2);
+      transition:transform .2s;
+    }
+    .social-icons a:hover{transform:scale(1.1);}
+    .social-icons svg{width:22px;height:22px;}
+
+    /* -------------------------
+       FOOTER
+    --------------------------*/
+    footer{
+      background:linear-gradient(to top, #F0FFE6, #F7F7F7);
+      backdrop-filter:blur(4px);
+      padding:20px;
+      text-align:center;
+      margin-top:20px;
+      box-shadow:0 -2px 6px rgba(0,0,0,.15);
+    }
+
+    .slider{
+      position: relative;
+    }
+    .slider img{
+      width: 100%;
+      border-radius: 6px;
+    }
+    .slide-img{
+      transition: transform 0.3s ease;
+    }
+
+    .slider .prev, .slider .next{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      background: rgba(0,0,0,0.4);
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .slider .prev{ left: 5px; }
+    .slider .next{ right: 5px; }
+
+
+     /* -------------------------
+   PROJECT DETAILS
+--------------------------*/
+}
+
+#details .detail-header {
+  margin-bottom: 15px;
+}
+
+#details h2 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #0077cc;
+}
+
+#details p {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.detail-gallery {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.detail-gallery img {
+  width: 70%;
+  max-height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.detail-footer {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+/* -------------------------
+   PROJECT DETAILS GALLERY IMAGE SIZE
+--------------------------*/
+#details .gallery img {
+  width: auto;       /* auto width */
+  max-width: 500px;  /* desktop view-এ max width */
+  height: auto;      /* proportionate height */
+  display: block;
+  margin: 10px auto; /* centered with spacing */
+  border-radius: 8px;
+}
+
+/* Slide image in project card (bigger view) */
+#details .slide-img {
+  max-width: 90%;    /* max width of main image */
+  height: auto;
+  margin: 0 auto 20px auto;
+  display: block;
+  border-radius: 8px;
+}
+/* -------------------------
+   PROJECT DETAILS CENTERED (Desktop + Mobile)
+--------------------------*/
+#details {
+  text-align: center;
+  display: none;            /* আগে hidden থাকে */
+  background: #F7F7F7;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  padding: 10px;
+  width: 50%;               /* mobile view-এ nearly full width */
+  max-width: 1000px;         /* desktop view-এ max width */
+  margin: 20px  auto ;        /* left-right auto -> centered */
+
+}
+
+#details.active {
+  display: block;           /* toggle হলে visible হবে */
+  width: 95% ;
+
+
+}
+
+
+/* হোমপেজের মতো স্লাইডার বাটন স্টাইল */
+.detail-slider .prev, .detail-slider .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 120, 204, 0.8);
+  border: none;
+  color: white;
+  font-size: 28px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.detail-slider .prev:hover, .detail-slider .next:hover {
+  background: rgba(0, 120, 204, 1);
+}
+
+.detail-slider .prev {
+  left: 10px;
+}
+
+.detail-slider .next {
+  right: 10px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  #details {
+    width: 95%;             /* mobile screen nearly full width */
+    padding: 15px;
+    margin: 15px auto;
+  }
+  .gallery img {
+    width: 100px;           /* smaller images in gallery for mobile */
+  }
+}
+
+/* Desktop tweaks */
+@media (min-width: 500px) {
+  .gallery img {
+    width: 150px;           /* bigger images for desktop */
+  }
+}
+
+
+    /* -------------------------
+       MOBILE RESPONSIVE
+    --------------------------*/
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      nav .brand h1 {
+        font-size: 18px;
+        white-space: nowrap;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+  }
+      .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .search-bar input, .search-bar select, .search-bar button {
+        width: 100%;
+      }
+      #projects {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+        padding: 10px;
+      }
+      .gallery img { width: 100px; }
+      .slider .prev, .slider .next { font-size: 28px; padding: 8px 12px; }
+
+    }
+
+
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="brand">
+        <img src="logo.png" alt="MIK PROPERTIES Logo" style="height:40px;">
+        <h1><a href="#home">Mik Properties</a></h1>
+      </div>
+      <ul>
+  <li><button id="homeBtn"><a href="#home">Home</a></button></li>
+  <li><button id="aboutBtn"><a href="#about">About Us</a></button></li>
+  <li><button id="toggle-search" class="searchBtn">Search</button></li>
+
+</ul>
+
+    </nav>
+  </header>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Search property...">
+    <select id="location"></select>
+    <select id="price">
+      <option value="">Price</option>
+      <option value="low">Below 50L</option>
+      <option value="mid">50L - 1Cr</option>
+      <option value="high">Above 1Cr</option>
+    </select>
+    <button id="apply">Apply</button>
+  </div>
+
+
+
+  <!-- PROJECT DETAILS -->
+  <div id="details"></div>
+
+  <!-- PROJECTS -->
+  <div id="projects"></div>
+
+  <!-- ABOUT US -->
+  <div id="about">
+    <h2>About Us</h2>
+    <p> Mik Properties একটি উদীয়মান রিয়েল এস্টেট প্রতিষ্ঠান, যেখানে আমরা সততা,
+      স্বচ্ছতা এবং প্রতিশ্রুতিকে সর্বোচ্চ গুরুত্ব দিই। বর্তমানে আমাদের মূল লক্ষ্য বিশ্বস্ত লোকেশনে মানসম্মত জমি বিক্রয়।
+      আমরা ছোট বা মাঝারি প্লট হোক—প্রতিটি সম্পত্তিতে যাচাই-বাছাই, সঠিক তথ্য এবং নিরাপদ বিনিয়োগ নিশ্চিত করি।
+ভবিষ্যতে ল্যান্ড + হাউজিং, কনস্ট্রাকশন ও সম্পূর্ণ রিয়েল এস্টেট সল্যুশন—সবকিছুই ধাপে ধাপে যুক্ত করার পরিকল্পনা রয়েছে।</p>
+  </div>
+
+  <!-- SOCIAL ICONS (Sticky Right) -->
+  <div class="social-icons">
+  <a href="https://wa.me/8801606047724" target="_blank" title="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 32 32">
+    <path fill="#25D366" d="M16.027 3C9.396 3 4 8.392 4 15.018c0 2.643.807 5.089 2.182 7.127L4 29l7.058-2.15A11.97 11.97 0 0016.027 27c6.633 0 12.027-5.389 12.027-11.982C28.054 8.392 22.66 3 16.027 3zm6.853 16.826c-.28.788-1.62 1.542-2.275 1.635-.597.084-1.366.12-2.21-.137-.509-.158-1.161-.379-1.998-.744-3.519-1.528-5.815-5.07-5.989-5.309-.175-.237-1.43-1.902-1.43-3.63 0-1.727.907-2.582 1.23-2.934.321-.353.7-.441.93-.441.231 0 .466.002.671.013.216.01.503-.081.788.602.28.676.953 2.344 1.037 2.514.084.169.14.37.028.607-.111.237-.167.37-.329.57-.161.2-.338.447-.482.6-.16.168-.327.352-.141.69.186.338.827 1.36 1.773 2.203 1.221 1.087 2.249 1.424 2.587 1.585.338.161.534.134.732-.079.199-.214.843-.98 1.067-1.318.223-.338.447-.284.748-.171.301.113 1.891.891 2.216 1.053.328.161.547.237.63.37.084.133.084.78-.196 1.568z"/>
+  </svg>
+</a>
+
+
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mikproperties.mail@gmail.com" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 512 512">
+    <path fill="#D44638" d="M467 61H45a45 45 0 00-45 45v300a45 45 0 0045 45h422a45 45 0 0045-45V106a45 45 0 00-45-45zm-6 60v22L256 268 51 143v-22h410zM51 392V188l170 100L51 392zm63 30l142-91 142 91H114zm347-30L291 288l170-100v204z"/>
+  </svg>
+</a>
+
+
+  <a href="https://www.facebook.com/profile.php?id=61580302139073" target="_blank" title="Facebook">
+  <svg width="28" height="28" viewBox="0 0 24 24">
+    <path fill="#1877F2" d="M22.676 0H1.326C.596 0 0 .597 0 1.326v21.348C0 23.402.596 24 1.326 24H12.82v-9.294H9.693v-3.696h3.127V8.311c0-3.1 1.893-4.789 4.659-4.789 1.326 0 2.464.099 2.796.144v3.24h-1.918c-1.508 0-1.798.717-1.798 1.768v2.318h3.595l-.468 3.696h-3.127V24h6.127C23.404 24 24 23.402 24 22.674V1.326C24 .597 23.404 0 22.676 0z"/>
+  </svg>
+</a>
+
+</div>
+
+
+  <!-- FOOTER -->
+  <footer>
+  <p><strong>  MIK PROPERTIES </strong> Providing trusted and innovative real estate solutions tailored for your needs.</p>
+  <p><strong>Contact:</strong> WhatsApp: <a href="https://wa.me/8801606074424" target="_blank" style="color:inherit; text-decoration:none;">01606074424</a> | Email: <a href="mailto:mikproperties.mail@gmail.com" style="color:inherit; text-decoration:none;">mikproperties.mail@gmail.com</a></p>
+  <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@mikproperties" target="_blank" style="color:inherit; text-decoration:none;">@mikproperties</a></p>
+  <p>&copy; <span id="year"></span> MIK PROPERTIES. All rights reserved.</p>
+</footer>
+
+
+  <script>
+  const PROPERTIES = [
+    {
+      id: 1,
+      title: "বিরুলিয়া আকরান বাজার ৩ শতাংশ জমি",
+      price: "18 Lakh (Negotiable)",
+      priceValue: 18,
+      location: "মৌজাঃ আকরান, ইউনিয়নঃ বিরুলিয়া, থানাঃ সাভার, জেলাঃ ঢাকা",
+      description: `
+ছোট প্লট… কিন্তু বড় সুযোগ! বিরুলিয়ায় ৩ sotangsho isn’t small at all।   ৩ শতাংশের প্রাইম লোকেশনের প্লট – বিরুলিয়া! শান্ত, নিরাপদ এবং ফিউচার-প্রমিজিং – ছোট কিন্তু ভ্যালু-স্ট্রং ইনভেস্টমেন্ট খুঁজছেন তাদের জন্য পারফেক্ট। লোকেশন: আকরাইন বাজারের পাশে
+🚗 সংযোগ রোড: ৮ ফিট
+💰 দাম: সাশ্রয়ী, কিন্তু ভ্যালু বাড়বে নিশ্চিত
+🔑 রেসিডেন্সিয়াল ব্যবহার + ভবিষ্যতের জন্য সলিড অ্যাসেট
+      `,
+      imgs: [
+        "photos/Ph0 _v1.jpg",
+        "photos/Ph1_v1.png",
+        "photos/Ph2_v1.png"
+      ],
+      videos: [
+        {
+          src: "videos/v1.mp4",
+          poster: "photos/Ph0_v1.jpg"
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "বিরুলিয়া আকরান বাজার ১০ শতাংশ জমি",
+      price: "1 Cr (Negotiable)",
+      priceValue: 100,
+      location: "মৌজাঃ আকরান, ইউনিয়নঃ বিরুলিয়া, থানাঃ সাভার, জেলাঃ ঢাকা",
+      description: `
+Budget যদি long-term growth এ use করতে চান — শহরের কাছেই নিজের মতো বাড়ি বানানোর জন্য পারফেক্ট জমি।
+Birulia Bridge থেকে মাত্র 3 km দূরে Dhaka-19 এলাকায় Mik Properties-এর ১০ শতাংশ জমি।
+স্মার্ট ইনভেস্টমেন্ট করতে চাইলে—এটাই সেরা সময়।
+      `,
+      imgs: [
+        "photos/Ph1_v2.png",
+        "photos/Ph3_v2.png",
+        "photos/Ph0_v2.png"
+      ],
+      videos: [
+        {
+          src: "videos/v2.mp4",
+          poster: "photos/Ph1_v2.png"
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: "Birulia Projects (Dhaka-19)",
+      priceValue: 0,
+      location: "মৌজাঃ আকরান, ইউনিয়নঃ বিরুলিয়া, থানাঃ সাভার, জেলাঃ ঢাকা",
+      description: `
+যদি কেউ land + home option চান — Birulia Bridge থেকে 3 km দূরে Dhaka-19 এলাকায়
+৩/৪/১০ শতক জমি মাত্র ১৮–৩০ লাখের মধ্যেই পাওয়া যাচ্ছে।
+স্মার্ট ইনভেস্টমেন্ট করার এখনই সেরা সময়।
+      `,
+      imgs: [
+        "photos/googlemap.png",
+        "photos/Ph0_v2.png",
+        "photos/Ph1_v2.png",
+        "photos/Ph1_v1.PNG"
+      ],
+      videos: [
+        {
+          src: "videos/v0.mp4",
+          poster: "photos/googlemap.png"
+        }
+      ]
+    },
+    {
+      id: 4,
+      title: "মিরপুর দুয়ারিপাড়া, ৬ষ্ঠ তলা বাড়ি জমিসহ",
+      price: "3.8 Cr (Negotiable)",
+      priceValue: 380,
+      location: "মিরপুর দুয়ারিপাড়া",
+      description: `
+মিরপুর দুয়ারিপাড়ায় জমিসহ ৬ তলা বাড়ি বিক্রয়!
+পল্লবী মেট্রো রেল স্টেশন থেকে মাত্র ৫০০ মিটার দূরে।
+গ্যাস, বিদ্যুৎ, লিফট—সব সুবিধাসহ রেডি বাড়ি।
+আলো-বাতাসে ভরপুর শান্ত পরিবেশে বসবাসের জন্য উপযোগী।
+      `,
+      imgs: [
+        "photos/Ph0_v4.png",
+        "photos/Ph1_v4.png",
+        "photos/Ph2_v4.png"
+      ],
+      videos: [
+        {
+          src: "videos/v4.mp4",
+          poster: "photos/Ph0_v4.png"
+        }
+      ]
+    },
+    {
+      id: 5,
+      title: "মিরপুর দুয়ারিপাড়া, ৭ তম তলা বাড়ি জমিসহ",
+      price: "4.8 Cr (Negotiable)",
+      priceValue: 480,
+      location: "মিরপুর দুয়ারিপাড়া",
+      description: `
+দুয়ারিপাড়ায় রেডি টু মুভ ইন ৭ তলা বাড়ি!
+আধুনিক রেসিডেনশিয়াল এলাকা — আলো-বাতাসে ভরপুর।
+সব আধুনিক সুবিধা হাতের নাগালে, লিফটসহ রেডি বিল্ডিং।
+মাত্র ১ কিঃমিঃ দূরে পল্লবী মেট্রো — লোকেশন মানেই ভ্যালু!
+      `,
+      imgs: [
+        "photos/Ph0_v3.png",
+        "photos/Ph1_v3.png",
+        "photos/Ph3_v3.png"
+      ],
+      videos: [
+        {
+          src: "videos/v3.mp4",
+          poster: "photos/Ph0_v3.png"
+        }
+      ]
+    },
+    {
+      id: 6,
+      title: "মিরপুর-৬০ ফিট, ৮ম তলা বাড়ি জমিসহ",
+      price: "14 Cr (Negotiable)",
+      priceValue: 1400,
+      location: "মিরপুর-৬০ ফিট পাকা রাস্তার পাশে, মসজিদের সংলগ্ন",
+      description: `
+Ready Building with Land for Sale – Prime Investment Opportunity
+Location: Mirpur, Dhaka (60 feet main road, adjacent to mosque)
+Plot Size: 6.5 katha
+Building: 8-storey, 2 units per floor, fully ready with lift
+Unit Size: 1700 sqft
+Total Floor Area: 3400 sqft
+Utilities: Electricity, water and new gas line connected
+Ground Floor: Shops with sufficient parking
+Monthly Income: Approximately 4.5 lakh taka — stable cashflow and secured return
+      `,
+      imgs: [
+        "photos/Ph0_v5.png",
+        "photos/Ph1_v5.png",
+        "photos/Ph2_v5.png"
+      ],
+      videos: [
+        {
+          src: "videos/v5.mp4",
+          poster: "photos/Ph0_v5.png"
+        }
+      ]
+    },
+    {
+      id: 7,
+      title: "শহরের খুব কাছেই দারুন একটি হাউজিং অপশন—বিরুলিয়া।",
+      price: " 24 Lakh (Negotiable)",
+      priceValue:  24,
+      location: "মৌজাঃ আকরান, ইউনিয়নঃ বিরুলিয়া, থানাঃ সাভার, জেলাঃ ঢাকা",
+      description: `
+শহরের খুব কাছেই ভালো option । বিরুলিয়ায়
+ বাজেটের মধ্যেই আপনার স্বপ্নের বাড়ি নির্মাণ করা যাবে একদম আপনার চাহিদা অনুযায়ী।
+আকরাইন বাজার থেকে মাত্র ২ মিনিট হাঁটা পথ। কাছেই স্কুল, হাসপাতাল, গার্মেন্টস—সব প্রয়োজনীয় সুবিধা একসাথে।
+      `,
+      imgs: [
+        "photos/Ph0_v6.jpg",
+        "photos/Ph1_v6.jpg"
+
+      ],
+      videos: [
+        {
+          src: "videos/v6.mp4",
+          poster: "photos/Ph0_v6.jpg"
+        }
+      ]
+    },
+  ];
+
+  const el = (selector) => document.querySelector(selector);
+
+  document.getElementById('homeBtn').addEventListener('click', () => {
+  location.hash = '';  // হ্যাশ খালি করবে, মানে হোম পেজ দেখাবে
+});
+
+
+  // ভিডিও থামানোর জন্য ফাংশন
+function stopAllVideos() {
+  document.querySelectorAll('video').forEach(video => {
+    video.pause();
+    video.currentTime = 0;
+  });
+}
+
+
+  // রেন্ডার হোম পেজে প্রপার্টি কার্ড গুলো, যেখানে থাম্বনেইল হিসেবে প্রথম ইমেজ দেখাবে
+   function render(data) {
+  el('#projects').innerHTML = data.map(p => `
+    <div class="card" onclick="location.hash='#/project/${p.id}'">
+      <div class="slider" data-id="${p.id}">
+        <span class="prev" onclick="slide(event, ${p.id}, -1)">&#10094;</span>
+        <div class="media-container" data-index="0" data-type="image">
+          <img src="${p.imgs[0]}" alt="${p.title}" style="width:100%; border-radius: 8px;">
+        </div>
+        <span class="next" onclick="slide(event, ${p.id}, 1)">&#10095;</span>
+      </div>
+      <h3>${p.title}</h3>
+      <p>Price: ${p.price}</p>
+      <p>Location: ${p.location}</p>
+    </div>
+  `).join('');
+}
+
+function slide(e, id, direction) {
+  e.stopPropagation();
+
+  const slider = document.querySelector(`.slider[data-id='${id}']`);
+  const mediaContainer = slider.querySelector('.media-container');
+  const property = PROPERTIES.find(p => p.id === id);
+
+  let index = parseInt(mediaContainer.getAttribute('data-index'));
+  let type = mediaContainer.getAttribute('data-type');
+
+  // Combine images and videos
+  const mediaList = [
+    ...property.imgs.map(src => ({ type: 'image', src })),
+    ...property.videos.map(v => ({ type: 'video', src: v.src, poster: v.poster }))
+  ];
+
+  index += direction;
+  if (index < 0) index = mediaList.length - 1;
+  if (index >= mediaList.length) index = 0;
+
+  mediaContainer.setAttribute('data-index', index);
+  mediaContainer.setAttribute('data-type', mediaList[index].type);
+
+  if (mediaList[index].type === 'image') {
+    mediaContainer.innerHTML = `<img src="${mediaList[index].src}" alt="${property.title}" style="width:100%; border-radius: 8px;">`;
+  } else {
+    mediaContainer.innerHTML = `
+      <video controls autoplay muted playsinline style="width:100%; border-radius: 8px;" poster="${mediaList[index].poster || ''}">
+        <source src="${mediaList[index].src}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    `;
+  }
+}
+
+
+  // ডিটেইলস পেজে প্রপার্টি ডিটেইলস এবং গ্যালারী দেখাবে
+   function showDetails(id) {
+  const p = PROPERTIES.find(x => x.id === id);
+
+  // মিডিয়া লিস্ট (ইমেজ + ভিডিও একসাথে)
+  const mediaList = [
+    ...p.imgs.map(src => ({ type: 'image', src })),
+    ...p.videos.map(v => ({ type: 'video', src: v.src, poster: v.poster }))
+  ];
+
+  let currentIndex = 0;
+
+  // ডিটেইলস এলিমেন্ট
+  const detailsEl = el("#details");
+
+  // স্লাইডার রেন্ডার ফাংশন
+  function renderSlide(index) {
+    const media = mediaList[index];
+    let mediaHTML = '';
+
+    if (media.type === 'image') {
+      mediaHTML = `<img src="${media.src}" alt="${p.title}" style="max-width: 100%; border-radius:8px;">`;
+    } else {
+      mediaHTML = `
+        <video controls autoplay style="max-width: 100%; border-radius:8px;" poster="${media.poster || ''}">
+          <source src="${media.src}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+    }
+
+    detailsEl.querySelector('.slide-content').innerHTML = mediaHTML;
+    detailsEl.querySelector('.slide-counter').textContent = `${index + 1} / ${mediaList.length}`;
+  }
+
+  // ইভেন্ট হ্যান্ডলার স্লাইড চেঞ্জের জন্য
+  function changeSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = mediaList.length - 1;
+    if (currentIndex >= mediaList.length) currentIndex = 0;
+    renderSlide(currentIndex);
+  }
+
+  // ডিটেইলস HTML
+  detailsEl.innerHTML = `
+    <div class="detail-header">
+      <h2>${p.title}</h2>
+      <p><strong>Price:</strong> ${p.price}</p>
+      <p><strong>Location:</strong> ${p.location}</p>
+      <p>${p.description.replace(/\n/g, "<br>")}</p>
+    </div>
+
+    <div class="detail-slider" style="position: relative; max-width: 600px; margin: 20px auto;">
+  <button id="prevSlide" class="prev">&#10094;</button>
+  <div class="slide-content" style="text-align: center; min-height: 300px;">
+    <!-- Slide content here -->
+  </div>
+  <button id="nextSlide" class="next">&#10095;</button>
+  <div class="slide-counter" style="text-align: center; margin-top: 10px; font-weight: bold;"></div>
+</div>
+
+
+    <div class="detail-footer" style="text-align: center; margin-top: 15px;">
+      <button onclick="closeDetails()" style="padding:10px 15px; background:#0077cc; color:#fff; border:none; border-radius:6px; cursor:pointer;">Close</button>
+    </div>
+  `;
+
+  // স্লাইডার বোতাম ইভেন্ট
+  detailsEl.querySelector('#prevSlide').addEventListener('click', () => changeSlide(-1));
+  detailsEl.querySelector('#nextSlide').addEventListener('click', () => changeSlide(1));
+
+  // প্রথম স্লাইড দেখাও
+  renderSlide(currentIndex);
+
+  // ডিটেইলস দেখাও
+  detailsEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeDetails() {
+  stopAllVideos();  // ভিডিও থামাও যখন ডিটেইলস বন্ধ করো
+  el("#details").classList.remove('active');
+}
+
+
+
+  // ফিল্টার অ্যাপ্লাই
+  function applyFilters() {
+    let q = el('#search').value.toLowerCase();
+    let loc = el('#location').value;
+    let price = el('#price').value;
+
+    let filtered = PROPERTIES.filter(p =>
+      p.title.toLowerCase().includes(q) &&
+      (loc === '' || p.location === loc) &&
+      (price === '' ||
+        (price === 'low' && p.priceValue < 50) ||
+        (price === 'mid' && p.priceValue >= 50 && p.priceValue <= 100) ||
+        (price === 'high' && p.priceValue > 100))
+    );
+    render(filtered);
+  }
+
+  // লোকেশন ফিল্ডে ইউনিক লোকেশনগুলো ফিল আপ করবে
+  function fillLocation() {
+    let locs = [...new Set(PROPERTIES.map(p => p.location))];
+    el('#location').innerHTML = `<option value="">All Locations</option>` + locs.map(l => `<option>${l}</option>`).join('');
+  }
+
+  // রাউটিং ফাংশন: হোম, অ্যাবাউট, প্রজেক্ট ডিটেইলস ইত্যাদি
+  function route() {
+  stopAllVideos();  // ভিডিও বন্ধ করো নতুন পেজে যাওয়ার আগে
+
+  if (location.hash.startsWith('#/project/')) {
+    showDetails(parseInt(location.hash.split('/')[2]));
+    el('#projects').style.display = 'none';
+    el('#about').style.display = 'none';
+  } else if (location.hash === '#about') {
+    el('#about').style.display = 'block';
+    el('#projects').style.display = 'none';
+    el('#details').classList.remove('active');
+  }
+  else if (location.hash === '#about') {
+    // অ্যাবাউট পেজ দেখাবে
+  }
+   else {
+    // Home or default
+    render(PROPERTIES);
+    el('#projects').style.display = 'grid';
+    el('#about').style.display = 'none';
+    el('#details').classList.remove('active');
+  }
+}
+
+
+  // ইভেন্ট লিসেনার লাগানো
+  el('#apply').addEventListener('click', applyFilters);
+  window.addEventListener('hashchange', route);
+
+  // শুরুতে লোকেশন ফিল আপ ও প্রপার্টি রেন্ডার
+  fillLocation();
+  render(PROPERTIES);
+  route();
+
+  // ইয়ার আপডেট
+  el('#year').textContent = new Date().getFullYear();
+
+  // সার্চ বারের টগল
+  el('#toggle-search').addEventListener('click', () => {
+    el('.search-bar').classList.toggle('active');
+
+
+  });
+</script>
+
+  <!-- Fancybox JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+</body>
+</html>
